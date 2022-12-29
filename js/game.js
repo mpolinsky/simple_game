@@ -13,18 +13,17 @@ function move(player, num_players, board, board_length){
     let oldPosition = board[player];
     // get roll
     let turnRoll = roll();
-    console.log("Roll: " + turnRoll);
     let newPosition = oldPosition + turnRoll;
     let bumps = 0;
     let winner = null;
 
     if (newPosition > (board_length-1)){
         // void move
-        console.log("No move, too far.");
+        //console.log("No move, too far.");
     }
 
     else if (newPosition == board_length-1){
-        console.log("Victoryyyyy!");
+        //console.log("Victoryyyyy!");
         winner = player;
         // make move
         board[player] = newPosition;
@@ -62,12 +61,12 @@ function turns(num_players, board, board_length){
     while(victory == false){
         // for each player
         for(let j=0; j < num_players; j++){
-            console.log("\n");
-            console.log("Player " + j + "'s turn.");
+            //console.log("\n");
+            //console.log("Player " + j + "'s turn.");
             count += 1;
             // move
             move_results = move(j, num_players, board, board_length);
-            console.log(move_results);
+            //console.log(move_results);
             show_board(board);
             // parse move results for return to game/simloop
             if(move_results[1] == null){
@@ -76,7 +75,6 @@ function turns(num_players, board, board_length){
             }
             else{
                 victory = true;
-                console.log("¡GAME OVER!");
                 break;
             }
             // else no move.  no action right?
@@ -101,35 +99,87 @@ function game(num_players, board_length){
     let victory = false;
     // for analysis
     let res = [];
-    console.log("Verification:\nnum_players: "+ num_players + "\nboard_length: " + board_length);
     res = turns(num_players, board, board_length);
-    console.log(res);
+    //console.log(res);
+    return res;
 
 }
 
 function main(num_simulations, num_players, board_length){
+    let res = [];
     for(let i = 0; i < num_simulations; i++){
         //console.log(i);
-        newGame = game(num_players, board_length)
+        newGame = game(num_players, board_length);
+        res.push(newGame);
     }
+    analyze(res, num_simulations);
     return 0;
 }
 
-function analyze(results){
-   turns = results[0];
-   bumps = results[1];
-   winners = results[2];
+function analyze(results, num_simulations, num_players, board_length){
 
-   // calculate min, max, avg for turns and bumps
-   
+    let turns = [];
+    let bumps = [];
+    let winners = [];
 
-   // calculate most frequent winner
+    for (let k = 0; k< results.length; k++){
+        turns.push(results[k][0]);
+        bumps.push(results[k][1]);
+        winners.push(results[k][2]);
+    }
+    //console.log("Turns:\n\t"+turns);
+    //console.log("Bumps:\n\t"+bumps);
+    //console.log("Winners:\n\t"+winners);
+    // calculate min, max, avg for turns and bumps
+    let turnMin = Math.max(turns);
+    let turnMax = Math.min(turns);
+    let bumpMin = Math.max(bumps);
+    let bumpMax = Math.min(bumps);
 
-   // put it all together
 
-   // dislpay the results of the simulations
+    let bumpAvg = 0;
+    let turnAvg = 0;
+
+    let winner = 0;
+
+    for(let i = 0; i < turns.length; i++){
+        turnAvg += turns[i]
+        turnAvg /= num_simulations
+        turnAvg = Math.round(turnAvg);
+    }
+
+    for(let i = 0; i < bumps.length; i++){
+        bumpAvg += bumpAvg[i]
+        bumpAvg /= num_simulations
+        bumpAvg = Math.round(bumpAvg);
+    }
+
+    // calculate most frequent winner
+    let freqDict = [0,0,0,0]
+    for(let i = 0; i < winners.length; i++){
+        freqDict[winners[i]]+=1;
+    }
+    console.log("Freqdict:\n\t" + freqDict)
+
+    // put it all together
+    console.log(Math.max(freqDict));
+    freqDict.sort();
+    console.log("Freqdict:\n\t" + freqDict)
+
+    // dislpay the results of the simulations
+    console.log("After " + num_simulations + " simulations with " + num_players + " players, and a board with " + board_length + "spaces:\n");
+
+    console.log("Max Turns: " + turnMax);
+    console.log("Avg Turns: " + turnAvg);
+    console.log("Min Turns: " + turnMin);
+
+    console.log("Max Bumps: " + bumpMax);
+    console.log("Avg Bumps: " + bumpAvg);
+    console.log("Min Bumps: " + bumpMin);
+
+    console.log("Top Winner: " + winner);
 
 }
 
 // Run
-main(1, 4, 60);
+main(10, 4, 60);
