@@ -9,18 +9,25 @@ function main(num_simulations, num_players, board_length){
 
 function game(num_players, board_length){
     // board
+    const board = [];
     // bumps
+    let bumps = 0;
     // turns
+    let turns = 0;
     // winner
+    let winner = 0;
     // victory
-    // current player
+    let victory = false;
+
+    turns()
+
 }
 
 function roll(die=6){
     return Math.round(Math.random()*die);
 }
 
-function move(){
+function move(player){
     
     // establish pawn position
 
@@ -30,15 +37,24 @@ function move(){
 }
 
 function turns(){
+    let victory = false;
     // while not victory
+    while(! victory){
         // for each player
-        
+        for(let j=0; j < num_players; j++){
             // victory check
-            
+            if (victory){
+                console.log("¡GAME OVER!");
+                return 1;
+            }// end victory check
+
             // move
-
-            // evaluate move results
-
-        return 0;
+            move(player)
+            
+            // parse move results for return to game/simloop
+            
+        }
+    }   
+    return 0;
 }
 console.log(roll());

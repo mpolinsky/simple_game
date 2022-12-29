@@ -1,5 +1,9 @@
 import java.util.Random;
 
+/*
+ * Game simulates the simple game: each player has one pawn and moves it along 
+ *   a stright track to the end.  Landing on a pawn bumps them off the board.
+ */
 public class Game {
     public int num_players;
     public int board_len;
@@ -30,6 +34,7 @@ public class Game {
         return roll;
     } // end method roll
 
+    // initialize board  and player list
     public void setup(){
         // set board to int[board_len]
         this.board = new char[this.board_len];
@@ -44,6 +49,7 @@ public class Game {
 
     } // end method create_board
 
+    // Generate a roll and move a pawn
     public void move(char player, int roll){
         //System.out.println("Player " + player + "'s roll is " + roll);
         // find out if pawn on board
@@ -79,6 +85,7 @@ public class Game {
 
     } // end method move
 
+    // Check victory and if true set bool and winner
     public void check_victory(char player){
         if(this.board[this.board_len-1] == player){
             this.victory = true;
@@ -86,6 +93,7 @@ public class Game {
         }
     } // end method check_victory
 
+    // carry out all turns in a game
     public void turns(){
         int count = -1;
         // while not this.victory
@@ -108,6 +116,7 @@ public class Game {
         this.turns = count;
     } // end method turns
 
+    // simple report 
     public void report(){
         System.out.println("Turns: " + turns + "\nBumps: " + bumps + "\nWinner: " + winner);
     }

@@ -85,8 +85,7 @@ public class Analyzer {
         bumpAvg /= list_length;
 
 
-        // Create frequency dist. for winners.  Currently using only top winner.
-        // I have a list of nums 1-4.  I want to count them.  Thats all.
+        // Create frequency dist. for winners.  
         HashMap<Integer, Integer> winnerFreq = new HashMap<Integer, Integer>();
         // init winnerFreq
         winnerFreq.put(1, 0); // weird.
