@@ -67,7 +67,7 @@ function turns(num_players, board, board_length){
             // move
             move_results = move(j, num_players, board, board_length);
             //console.log(move_results);
-            show_board(board);
+            //show_board(board);
             // parse move results for return to game/simloop
             if(move_results[1] == null){
                 // normal move 
@@ -80,7 +80,7 @@ function turns(num_players, board, board_length){
             // else no move.  no action right?
         }    
     }   
-    console.log("End game");
+    
     const return_results = [count, bumps, move_results[1]];
     // game over
     return return_results;
@@ -97,7 +97,7 @@ function game(num_players, board_length){
 
 }
 
-function main(num_simulations, num_players, board_length){
+function main(num_simulations=1, num_players=4, board_length=60){
     let res = [];
     for(let i = 0; i < num_simulations; i++){
         //console.log(i);
