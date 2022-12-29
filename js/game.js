@@ -27,34 +27,63 @@ function roll(die=6){
     return Math.round(Math.random()*die);
 }
 
-function move(player){
-    
+function move(player, board){
     // establish pawn position
-
+    let oldPosition = board[player];
     // get roll
-    
-    return 0;
+    let turnRoll = roll();
+    let newPosition = oldPosition + turnRoll;
+    let bumps = 0;
+
+    if (newPosition > board_length-1){
+        // void move
+        console.log("No move, too far.");
+        return 0;
+    }
+
+    if (newPosition == board_length-1){
+        console.log("Victoryyyyy!");
+        return -1;
+    }
+
+    // check bump
+    for(let i = 0; i< num_players; i++){
+        if (board[i] == newPosition){
+            bumps +=1;
+            // carry out bump
+            board[i] = -1;
+        }
+    }
+
+    // make move
+    board[player] = newspace;
+
+    return bumps;
 }
+
 
 function turns(){
     let victory = false;
+    let bumps = []
     // while not victory
     while(! victory){
         // for each player
         for(let j=0; j < num_players; j++){
-            // victory check
-            if (victory){
-                console.log("¡GAME OVER!");
-                return 1;
-            }// end victory check
-
             // move
-            move(player)
+            let move_result = move(player)
             
             // parse move results for return to game/simloop
-            
-        }
+            if(move_result > 0){
+                bumps.append(move_result)
+            }
+            else if (move_result == -1){
+                console.log("¡GAME OVER!");
+                break;
+            }
+            // else no move.  no action right?
+        }    
     }   
+    // game over
     return 0;
 }
 console.log(roll());
