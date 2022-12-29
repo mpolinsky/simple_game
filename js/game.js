@@ -1,5 +1,6 @@
 // game.js
-function roll(){
-
-    return 0;
+function roll(die=6){
+    return Math.round(Math.random()*die);
 }
+
+console.log(roll());
