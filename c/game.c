@@ -45,6 +45,7 @@ int main(int argc, char* argv[]){
 
     for (int oo = 0; oo < simulations; oo++){
         game(num_players, board_length, turnstats);
+        // consider wrapping this in analyze() and passing turnstats.
         turns = turnstats[0];
         bumps = turnstats[1];
         winner = turnstats[2];
@@ -76,7 +77,7 @@ int main(int argc, char* argv[]){
         turnstats[2] = 0;
     } // end simulation for loop
         
-        // Still need to get avgs 
+    // get avgs
     turn_avg = total_turns/simulations;
     bump_avg = total_bumps/simulations;
 
@@ -85,7 +86,7 @@ int main(int argc, char* argv[]){
     for (int iii=0; iii<4; iii++){
         winFreq[iii] = 0;
     }
-    // Still need to create frequency table for winners and pick mode.
+   
     for(int q=0; q<simulations ;q++){
         winFreq[winners[q]-97] += 1;
     } // end win frequency for loop
@@ -100,7 +101,7 @@ int main(int argc, char* argv[]){
         }
     }
 
-    
+
     printf("winner: %c\n", winner+97);
     printf("win_max: %d\n", win_max);
     
@@ -112,7 +113,7 @@ int main(int argc, char* argv[]){
 
 
 void game(int num_players, int board_length, int r[]){
-    // board and players are arrays of defined length that do not grow.
+    // setup
     char board[board_length];
     int bumps = 0;
     int victory = 0;
@@ -233,7 +234,7 @@ void game(int num_players, int board_length, int r[]){
         return 0;
     } // end function victory_check
 
-    // analyze TODO
+    // analyze
     int analyze(){
         printf("H\n");
         return 0;
