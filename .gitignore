@@ -137,4 +137,4 @@ dmypy.json
 .idea
 java/*/out/
 *.iml
-*.class
+java/*/src/*.class
