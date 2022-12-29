@@ -89,14 +89,6 @@ function turns(num_players, board, board_length){
 function game(num_players, board_length){
     // board
     let board = [-1,-1,-1,-1];
-    // bumps
-    let bumps = 0;
-    // turns
-    let turn_count = 0;
-    // winner
-    let winner = 0;
-    // victory
-    let victory = false;
     // for analysis
     let res = [];
     res = turns(num_players, board, board_length);
@@ -112,7 +104,7 @@ function main(num_simulations, num_players, board_length){
         newGame = game(num_players, board_length);
         res.push(newGame);
     }
-    analyze(res, num_simulations);
+    analyze(res, num_simulations, num_players, board_length);
     return 0;
 }
 
@@ -131,43 +123,57 @@ function analyze(results, num_simulations, num_players, board_length){
     //console.log("Bumps:\n\t"+bumps);
     //console.log("Winners:\n\t"+winners);
     // calculate min, max, avg for turns and bumps
-    let turnMin = Math.max(turns);
-    let turnMax = Math.min(turns);
-    let bumpMin = Math.max(bumps);
-    let bumpMax = Math.min(bumps);
+
+    let turnMin = Number.MAX_SAFE_INTEGER;
+    let turnMax = 0;
+    let bumpMin = Number.MAX_SAFE_INTEGER;
+    let bumpMax = 0;
+
+    for (let i = 0; i < turns.length; i++){
+        if(turns[i] > turnMax){turnMax = turns[i];}
+        if(turns[i] < turnMin){turnMin = turns[i];}
+        if(bumps[i] > bumpMax){bumpMax = bumps[i];}
+        if(bumps[i] < bumpMin){bumpMin = bumps[i];}
+    }
 
 
     let bumpAvg = 0;
     let turnAvg = 0;
 
-    let winner = 0;
+    let winner = -1;
 
     for(let i = 0; i < turns.length; i++){
         turnAvg += turns[i]
-        turnAvg /= num_simulations
-        turnAvg = Math.round(turnAvg);
     }
+    turnAvg /= num_simulations;
+    turnAvg = Math.round(turnAvg);
 
     for(let i = 0; i < bumps.length; i++){
-        bumpAvg += bumpAvg[i]
-        bumpAvg /= num_simulations
-        bumpAvg = Math.round(bumpAvg);
+        bumpAvg += bumps[i]
     }
+    
+    bumpAvg /= num_simulations;
+    bumpAvg = Math.round(bumpAvg);
 
     // calculate most frequent winner
     let freqDict = [0,0,0,0]
     for(let i = 0; i < winners.length; i++){
         freqDict[winners[i]]+=1;
     }
-    console.log("Freqdict:\n\t" + freqDict)
 
-    // put it all together
-    console.log(Math.max(freqDict));
-    freqDict.sort();
-    console.log("Freqdict:\n\t" + freqDict)
+    let max = 0;
 
-    // dislpay the results of the simulations
-    console.log("After " + num_simulations + " simulations with " + num_players + " players, and a board with " + board_length + "spaces:\n");
+    for(let i=0; i<freqDict.length; i++){
+        if (freqDict[i] > max){
+            max = freqDict[i];
+            winner = i;
+        }
+    }
+
+    winner += 97;
+
+    // put it all together/dislpay the results of the simulations
+    console.log("After " + num_simulations + " simulations with " + num_players + " players, and a board with " + board_length + " spaces:\n");
 
     console.log("Max Turns: " + turnMax);
     console.log("Avg Turns: " + turnAvg);
@@ -176,10 +182,9 @@ function analyze(results, num_simulations, num_players, board_length){
     console.log("Max Bumps: " + bumpMax);
     console.log("Avg Bumps: " + bumpAvg);
     console.log("Min Bumps: " + bumpMin);
-
-    console.log("Top Winner: " + winner);
+    String.fromCharCode(winner)
+    console.log("Top Winner: " + String.fromCharCode(winner));
 
 }
-
 // Run
-main(10, 4, 60);
+main(process.argv[2], process.argv[3], process.argv[4]);
