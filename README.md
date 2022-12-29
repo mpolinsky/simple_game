@@ -3,5 +3,5 @@
 ###      If a player lands on a square occupied by an opposing pawn, the opposing pawn is bumped off the board.
 
 #### • C implementation is fastest, followed by Java and Python.  
-#### JS implementation pending.
-#### Python C-Extension implementation pending.
+#### • JS implementation pending.
+#### • Python C-Extension implementation pending.
