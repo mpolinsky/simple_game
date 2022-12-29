@@ -5,4 +5,4 @@
 
 #### • C implementation is fastest, followed by Java and Python.  
 #### • JS implementation pending.
-#### • Python C-Extension implementation pending.
+#### • Python C-extension implementation pending.
